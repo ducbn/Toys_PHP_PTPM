@@ -10,11 +10,10 @@ class CategorySeeder extends Seeder
     public function run()
     {
         Category::insert([
-            ['name' => 'Điện thoại', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Laptop', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Máy tính bảng', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Phụ kiện', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Đồ gia dụng', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Thú Bông', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Búp Bê', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Đồ Chơi Lắp Ghép', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Đồ Chơi Phương Tiện', 'created_at' => now(), 'updated_at' => now()]
         ]);
     }
 }

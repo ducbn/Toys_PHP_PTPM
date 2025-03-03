@@ -6,7 +6,7 @@ body {
 }
 
 header {
-    background-color: #333;
+    background-color: rgb(190, 45, 52);
     color: #fff;
     padding: 15px 20px;
     text-align: center;
@@ -20,7 +20,7 @@ header a {
     float: left;
     padding: 8px 12px;
     border-radius: 4px;
-    background-color: #555;
+    background-color: rgb(190, 45, 52);
 }
 
 header h1 {
@@ -93,7 +93,7 @@ form input, form textarea {
 form button {
     width: 100%;
     padding: 15px;
-    background-color: #007bff;
+    background-color: #03b82a;
     color: #fff;
     font-size: 18px;
     border: none;
@@ -102,13 +102,13 @@ form button {
 }
 
 form button:hover {
-    background-color: #0056b3;
+    background-color: #00b31b;
 }
 
 footer {
     text-align: center;
     padding: 15px;
-    background-color: #333;
+    background-color: rgb(190, 45, 52);
     color: #fff;
     margin-top: 30px;
 }

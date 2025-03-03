@@ -6,11 +6,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chi Tiết Sản Phẩm</title>
     <link rel="stylesheet" href="{{ asset('css/show.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body>
-    <header>
-        <h1>Chi Tiết Sản Phẩm</h1>
+    <header class="header">
+        <div class="container">
+            <div class="header-top">
+                <!-- Nút lịch sử giao dịch bên phải -->
+                <a href="{{ route('orders.history') }}" class="transaction-btn">Lịch sử giao dịch</a>
+
+                <!-- Nút hiển thị tên người dùng -->
+                @auth
+                    <div class="user-menu-container">
+                        <button class="user-btn">
+                            {{ Auth::user()->name }} ▼
+                        </button>
+                        <div class="user-menu">
+                            <a href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                Đăng xuất
+                            </a>
+                        </div>
+                    </div>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                @endauth
+
+            </div>
+            <div class="header-mid">
+                <!-- logo image -->
+                <a href="{{ route('products.index') }}" class="logo1">
+                    <img src="images/logo-toys.png" alt="">
+                </a>
+
+                <!-- Ô tìm kiếm -->
+                <form action="{{ route('products.index') }}" method="GET" class="search-form">
+                    <input type="text" name="search" placeholder="Tìm kiếm sản phẩm..." value="{{ request('search') }}">
+                    <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </form>
+
+                <!-- Nút Giỏ hàng -->
+                <a href="{{ route('cart.index') }}" class="cart-btn"><i class="fa-solid fa-basket-shopping"></i> Giỏ
+                    hàng</a>
+
+            </div>
+
+        </div>
     </header>
 
     <div class="product-detail container">

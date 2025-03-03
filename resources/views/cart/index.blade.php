@@ -9,9 +9,49 @@
 </head>
 
 <body>
-    <header>
-        <a href="{{ route('products.index') }}" class="back-btn">← Quay lại</a>
-        <h1>Giỏ Hàng</h1>
+    <header class="header">
+        <div class="container">
+            <div class="header-top">
+                <!-- Nút lịch sử giao dịch bên phải -->
+                <a href="{{ route('orders.history') }}" class="transaction-btn">Lịch sử giao dịch</a>
+
+                <!-- Nút hiển thị tên người dùng -->
+                @auth
+                    <div class="user-menu-container">
+                        <button class="user-btn">
+                            {{ Auth::user()->name }} ▼
+                        </button>
+                        <div class="user-menu">
+                            <a href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                Đăng xuất
+                            </a>
+                        </div>
+                    </div>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                @endauth
+
+            </div>
+            <div class="header-mid">
+                <!-- logo image -->
+                <a href="{{ route('products.index') }}" class="logo">
+                    <img src="images/logo-toys.png" alt="logo">
+                </a>
+
+                <!-- Ô tìm kiếm -->
+                <form action="{{ route('products.index') }}" method="GET" class="search-form">
+                    <input type="text" name="search" placeholder="Tìm kiếm sản phẩm..." value="{{ request('search') }}">
+                    <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </form>
+
+                <!-- Nút Giỏ hàng -->
+                <a href="{{ route('cart.index') }}" class="cart-btn"><i class="fa-solid fa-basket-shopping"></i> Giỏ
+                    hàng</a>
+
+            </div>
+        </div>
     </header>
 
     <div class="cart">
