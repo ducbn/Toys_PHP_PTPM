@@ -370,3 +370,16 @@ footer {
     transform: scale(1.05);
 }
 
+.banner-container {
+    width: 100%; /* Hoặc giới hạn max-width nếu cần */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+
+.banner img {
+    max-width: 100%; /* Đảm bảo không bị tràn khung */
+    height: auto; /* Giữ nguyên tỷ lệ ảnh */
+    display: block;
+}

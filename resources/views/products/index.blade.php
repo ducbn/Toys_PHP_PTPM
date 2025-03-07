@@ -71,9 +71,9 @@
 
     <div class="banner-container">
         <div class="banner" id="banner">
-            <img src="{{ asset('images/labubu.webp') }}" alt="Banner 1">
-            <img src="{{ asset('images/banner2.jpeg') }}" alt="Banner 2">
-            <img src="{{ asset('images/banner3.jpeg') }}" alt="Banner 3">
+            <img src="{{ asset('images/labubu-banner.jpg') }}" alt="Banner 1">
+            <img src="{{ asset('images/banner22.jpg') }}" alt="Banner 2">
+            <img src="{{ asset('images/banner33.jpg') }}" alt="Banner 3">
         </div>
     </div>
     <script>
