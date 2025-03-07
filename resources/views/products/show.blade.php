@@ -13,46 +13,33 @@
     <header class="header">
         <div class="container">
             <div class="header-top">
-                <!-- Nút lịch sử giao dịch bên phải -->
                 <a href="{{ route('orders.history') }}" class="transaction-btn">Lịch sử giao dịch</a>
-
-                <!-- Nút hiển thị tên người dùng -->
                 @auth
-                    <div class="user-menu-container">
-                        <button class="user-btn">
-                            {{ Auth::user()->name }} ▼
-                        </button>
-                        <div class="user-menu">
-                            <a href="{{ route('logout') }}"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                Đăng xuất
-                            </a>
-                        </div>
+                <div class="user-menu-container">
+                    <button class="user-btn">{{ Auth::user()->name }} ▼</button>
+                    <div class="user-menu">
+                        <a href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Đăng xuất
+                        </a>
                     </div>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
+                </div>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
                 @endauth
-
             </div>
             <div class="header-mid">
-                <!-- logo image -->
-                <a href="{{ route('products.index') }}" class="logo1">
-                    <img src="images/logo-toys.png" alt="">
+                <a href="{{ route('products.index') }}" class="logo">
+                    <img src="{{ asset('images/logo-toys.png') }}" alt="logo">
                 </a>
-
-                <!-- Ô tìm kiếm -->
+                
                 <form action="{{ route('products.index') }}" method="GET" class="search-form">
                     <input type="text" name="search" placeholder="Tìm kiếm sản phẩm..." value="{{ request('search') }}">
                     <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
-
-                <!-- Nút Giỏ hàng -->
-                <a href="{{ route('cart.index') }}" class="cart-btn"><i class="fa-solid fa-basket-shopping"></i> Giỏ
-                    hàng</a>
-
+                <a href="{{ route('cart.index') }}" class="cart-btn"><i class="fa-solid fa-basket-shopping"></i> Giỏ hàng</a>
             </div>
-
         </div>
     </header>
 
@@ -65,20 +52,54 @@
             <p class="price">{{ number_format($product->price, 0, ',', '.') }} VND</p>
             <p class="description">{{ $product->description }}</p>
 
+            <p style="font-weight: bold; margin-bottom: 8px;">Số lượng:</p>
+            <div class="quantity-wrapper">
+                <button type="button" id="minus">-</button>
+                <input type="number" id="quantity" name="quantity" value="1" min="1">
+                <button type="button" id="plus">+</button>
+            </div>
+            <br>
+
+            @auth
             <form action="{{ route('cart.add', $product->id) }}" method="POST">
                 @csrf
-                <input type="hidden" name="product_id" value="{{ $product->id }}">
-                <label for="quantity">Số lượng:</label>
-                <input type="number" id="quantity" name="quantity" value="1" min="1">
-                <br>
+                <input type="hidden" name="quantity" id="hiddenQuantity" value="1">
                 <button type="submit" class="btn">Thêm vào giỏ hàng</button>
             </form>
+            @else
+            <button onclick="window.location.href='{{ route('welcome') }}'" class="btn">Thêm vào giỏ hàng</button>
+            @endauth
         </div>
     </div>
 
     <footer>
         <p>© 2025 Thương mại điện tử</p>
     </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const quantityInput = document.getElementById("quantity");
+            const hiddenQuantity = document.getElementById("hiddenQuantity");
+            const minusBtn = document.getElementById("minus");
+            const plusBtn = document.getElementById("plus");
+
+            minusBtn.addEventListener("click", function () {
+                let value = parseInt(quantityInput.value);
+                if (value > 1) quantityInput.value = value - 1;
+                hiddenQuantity.value = quantityInput.value;
+            });
+
+            plusBtn.addEventListener("click", function () {
+                let value = parseInt(quantityInput.value);
+                quantityInput.value = value + 1;
+                hiddenQuantity.value = quantityInput.value;
+            });
+
+            quantityInput.addEventListener("input", function () {
+                hiddenQuantity.value = quantityInput.value;
+            });
+        });
+    </script>
 </body>
 
 </html>

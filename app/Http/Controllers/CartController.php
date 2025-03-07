@@ -14,23 +14,26 @@ class CartController extends Controller
         return view('cart.index', compact('cartItems'));
     }
 
-    public function add(Product $product) {
+    public function add(Request $request, Product $product) {
+        $quantity = $request->input('quantity', 1); // Lấy số lượng từ form, mặc định là 1
+    
         $cartItem = Cart::where('user_id', Auth::id())
-                            ->where('product_id', $product->id)
-                            ->first();
-
+                        ->where('product_id', $product->id)
+                        ->first();
+    
         if ($cartItem) {
-            $cartItem->increment('quantity');
+            $cartItem->increment('quantity', $quantity);
         } else {
             Cart::create([
                 'user_id' => Auth::id(),
                 'product_id' => $product->id,
-                'quantity' => 1,
+                'quantity' => $quantity, // Gán số lượng lấy từ request
             ]);
         }
-
+    
         return redirect()->route('cart.index')->with('success', 'Sản phẩm đã được thêm vào giỏ hàng!');
     }
+    
 
     public function update(Request $request, $id) {
         Cart::where('id', $id)->update([
@@ -44,4 +47,5 @@ class CartController extends Controller
         Cart::where('id', $id)->delete();
         return redirect()->route('cart.index')->with('success', 'Sản phẩm đã bị xóa!');
     }
+    
 }

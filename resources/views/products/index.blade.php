@@ -9,15 +9,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
-
 <body>
     <header class="header">
         <div class="container">
             <div class="header-top">
-                <!-- Nút lịch sử giao dịch bên phải -->
-                <a href="{{ route('orders.history') }}" class="transaction-btn">Lịch sử giao dịch</a>
+                <!-- Nút lịch sử giao dịch -->
+                <a href="{{ Auth::check() ? route('orders.history') : route('welcome') }}" class="transaction-btn">Lịch sử giao dịch</a>
 
-                <!-- Nút hiển thị tên người dùng -->
+                <!-- Kiểm tra trạng thái đăng nhập -->
                 @auth
                     <div class="user-menu-container">
                         <button class="user-btn">
@@ -33,11 +32,13 @@
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
+                @else
+                    <a href="{{ route('welcome') }}" class="login-btn">Đăng nhập</a>
                 @endauth
-
             </div>
+
             <div class="header-mid">
-                <!-- logo image -->
+                <!-- Logo -->
                 <a href="{{ route('products.index') }}" class="logo">
                     <img src="images/logo-toys.png" alt="logo">
                 </a>
@@ -49,12 +50,13 @@
                 </form>
 
                 <!-- Nút Giỏ hàng -->
-                <a href="{{ route('cart.index') }}" class="cart-btn"><i class="fa-solid fa-basket-shopping"></i> Giỏ
-                    hàng</a>
-
+                <a href="{{ Auth::check() ? route('cart.index') : route('welcome') }}" class="cart-btn">
+                    <i class="fa-solid fa-basket-shopping"></i> Giỏ hàng
+                </a>
             </div>
+
             <div class="header-bottom">
-                <!-- danh mục ở giữa -->
+                <!-- Danh mục sản phẩm -->
                 <div class="category-menu">
                     <a href="{{ route('products.index') }}">Tất cả</a>
                     @foreach($categories as $category)
@@ -90,13 +92,11 @@
         setInterval(showNextSlide, 3000);
     </script>
 
-
     <div class="product-list container">
         @foreach($products as $product)
         <div class="product-item">
             <img src="{{ asset('images/' . $product->image) }}" alt="{{ $product->name }}" class="product-image">
             <h3 class="product-name">{{ $product->name }}</h3>
-            <p class="product-description">{!! nl2br(e($product->description)) !!}</p>
             <p class="product-price">{{ number_format($product->price, 0, ',', '.') }} VND</p>
             <a href="{{ route('products.show', $product->id) }}" class="btn btn-detail">Xem chi tiết</a>
         </div>
